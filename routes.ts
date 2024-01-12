@@ -7,6 +7,12 @@
 export const publicRoutes = ["/"];
 
 /**
+ * Langing Page Route
+ * @type {string}
+ */
+export const landingPageRoute = "/";
+
+/**
  * An array of routes that are used
  * for authentication, these routes
  * will redirect logged in users to /settings

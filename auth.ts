@@ -22,9 +22,13 @@ export const {
     },
   },
   callbacks: {
-    async signIn({ user }) {
-      // const existingUser = await getUserById(user.id);
-      // if (!existingUser || !existingUser.emailVerified) return false;
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") return true;
+
+      const existingUser = await getUserById(user.id);
+
+      if (!existingUser || !existingUser.emailVerified) return false;
+
       return true;
     },
     async redirect({ baseUrl }) {
