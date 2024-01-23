@@ -56,3 +56,21 @@ export const updateEmailVerifiedAndEmailById = async (
     return null;
   }
 };
+
+export const createUser = async (
+  email: string,
+  name: string,
+  hashedPassword: string
+) => {
+  try {
+    await db.user.create({
+      data: {
+        email,
+        name,
+        password: hashedPassword,
+      },
+    });
+  } catch (error) {
+    return null;
+  }
+};

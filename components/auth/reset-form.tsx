@@ -20,6 +20,7 @@ import {
   FormMessage,
   FormField,
 } from "@/components/ui/form";
+import { reset } from "@/actions/reset";
 
 export const ResetForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -36,7 +37,12 @@ export const ResetForm = () => {
   const onSubmit = (values: z.infer<typeof ResetSchema>) => {
     setError("");
     setSuccess("");
-    startTransition(() => {});
+    startTransition(() => {
+      reset(values).then((data) => {
+        setError(data?.error || "");
+        setSuccess(data?.success || "");
+      });
+    });
     console.log(values);
   };
 

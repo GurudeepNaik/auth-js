@@ -1,4 +1,9 @@
 import {
+  createPasswordResetToken,
+  getPasswordResetTokenByEmail,
+  removeExistingPasswordResetToken,
+} from "@/data/password-reset-token";
+import {
   createVerificationToken,
   getVerificationTokenByEmail,
   removeExistingToken,
@@ -21,4 +26,22 @@ export const generateVerificationToken = async (email: string) => {
   });
 
   return verificationToken;
+};
+
+export const generateResetPasswordToken = async (email: string) => {
+  const token = uuid();
+  const expires = new Date(new Date().getTime() + 3600 * 1000);
+
+  const existingToken = await getPasswordResetTokenByEmail(email);
+  if (existingToken) {
+    await removeExistingPasswordResetToken(existingToken);
+  }
+
+  const passwordResetToken = await createPasswordResetToken({
+    email,
+    token,
+    expires,
+  });
+
+  return passwordResetToken;
 };

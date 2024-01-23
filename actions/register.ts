@@ -4,8 +4,7 @@ import * as z from "zod";
 import bcrypt from "bcrypt";
 
 import { RegisterSchema } from "@/schemas";
-import { db } from "@/lib/db";
-import { getUserByEmail } from "@/data/user";
+import { createUser, getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
@@ -22,15 +21,10 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Email already in use!" };
   }
 
-  await db.user.create({
-    data: {
-      email,
-      name,
-      password: hashedPassword,
-    },
-  });
+  await createUser(email, name, hashedPassword);
 
   const verificationToken = await generateVerificationToken(email);
+
   await sendVerificationEmail(
     verificationToken?.email || "",
     verificationToken?.token || ""
