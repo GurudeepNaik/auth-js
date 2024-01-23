@@ -5,6 +5,11 @@ import { UserRole } from "@prisma/client";
 import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getUserById, updateEmailVerifiedById } from "@/data/user";
+import {
+  deleteTwoFactorConfirmationById,
+  getTwoFactorConfirmationByUserId,
+} from "@/data/two-factor-confirmation";
+import { removeExistingTwoFactorToken } from "./data/two-factor-token";
 
 export const {
   handlers: { GET, POST },
@@ -27,7 +32,21 @@ export const {
 
       const existingUser = await getUserById(user.id);
 
-      if (!existingUser || !existingUser.emailVerified) return false;
+      if (!existingUser) return false;
+
+      const { emailVerified, isTwoFactorEnabled } = existingUser;
+
+      if (!emailVerified) return false;
+
+      if (isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        );
+
+        if (!twoFactorConfirmation) return false;
+
+        await deleteTwoFactorConfirmationById(twoFactorConfirmation.id);
+      }
 
       return true;
     },
