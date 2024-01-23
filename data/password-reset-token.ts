@@ -60,7 +60,7 @@ export const createPasswordResetToken = async ({
   }
 };
 
-export const deleteVerificationTokenById = async (id: string) => {
+export const deletePasswordResetTokenById = async (id: string) => {
   try {
     await db.passwordResetToken.delete({
       where: { id: id },

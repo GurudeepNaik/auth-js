@@ -4,7 +4,7 @@
  * require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
 /**
  * Langing Page Route
@@ -22,8 +22,8 @@ export const authRoutes = [
   "/auth/login",
   "/auth/register",
   "/auth/error",
-  "/auth/new-verification",
   "/auth/reset",
+  "/auth/new-password",
 ];
 
 /**

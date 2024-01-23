@@ -74,3 +74,15 @@ export const createUser = async (
     return null;
   }
 };
+
+export const updatePasswordById = async (id: string, password: string) => {
+  try {
+    await db.user.update({
+      where: { id },
+      data: { password },
+    });
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
