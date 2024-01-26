@@ -1,4 +1,7 @@
+import * as z from "zod";
+
 import { db } from "@/lib/db";
+import { SettingsSchema } from "@/schemas";
 import { User, VerificationToken } from "@prisma/client";
 
 export const getUserByEmail = async (email: string) => {
@@ -80,6 +83,21 @@ export const updatePasswordById = async (id: string, password: string) => {
     await db.user.update({
       where: { id },
       data: { password },
+    });
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const updateUserById = async (
+  id: string,
+  values: z.infer<typeof SettingsSchema>
+) => {
+  try {
+    await db.user.update({
+      where: { id },
+      data: { ...values },
     });
     return null;
   } catch (error) {

@@ -23,7 +23,10 @@ import { redirect } from "next/navigation";
 
 import * as z from "zod";
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
+export const login = async (
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string
+) => {
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) return { error: "Invalid fields!" };
@@ -94,9 +97,12 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       password,
       redirect: false,
     });
-    redirect(DEFAULT_LOGIN_REDIRECT);
+    if (callbackUrl) {
+      redirect(callbackUrl);
+    } else {
+      redirect(DEFAULT_LOGIN_REDIRECT);
+    }
   } catch (error) {
-    //TODO
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":

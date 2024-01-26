@@ -31,9 +31,19 @@ export default auth((req) => {
 
     return null;
   }
+  console.log(isLoggedin, nextUrl.pathname);
 
   if (!isLoggedin && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+    );
   }
 
   if (isLoggedin && isLandingPage) {

@@ -1,6 +1,10 @@
 "use server";
 
-import { getUserByEmail, updateEmailVerifiedAndEmailById } from "@/data/user";
+import {
+  getUserByEmail,
+  getUserById,
+  updateEmailVerifiedAndEmailById,
+} from "@/data/user";
 import {
   deleteVerificationTokenById,
   getVerificationTokenByToken,
@@ -20,6 +24,7 @@ export const newVerification = async (token: string) => {
   }
 
   const existingUser = await getUserByEmail(existingToken.email);
+  const existingUser1 = await getUserById(existingToken.id);
 
   if (!existingUser) {
     return { error: "Email does not exist!" };
