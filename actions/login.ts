@@ -99,11 +99,11 @@ export const login = async (
       redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
     return;
-    if (callbackUrl) {
-      redirect(callbackUrl);
-    } else {
-      redirect(DEFAULT_LOGIN_REDIRECT);
-    }
+    // if (callbackUrl) {
+    //   redirect(callbackUrl);
+    // } else {
+    //   redirect(DEFAULT_LOGIN_REDIRECT);
+    // }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
