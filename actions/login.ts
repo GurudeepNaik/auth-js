@@ -97,8 +97,6 @@ export const login = async (
       password,
       redirect: false,
     });
-    console.log("Hello There");
-
     if (callbackUrl) {
       redirect(callbackUrl);
     } else {
