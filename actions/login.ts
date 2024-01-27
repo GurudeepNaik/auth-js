@@ -92,16 +92,7 @@ export const login = async (
   }
 
   try {
-    console.log("Signing In Started");
-
     const data = await signIn("credentials", {
-      email,
-      password,
-      redirect: true,
-      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
-    });
-    console.log("Signing In Completed");
-    console.log(data, {
       email,
       password,
       redirect: true,

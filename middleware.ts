@@ -31,7 +31,6 @@ export default auth((req) => {
 
     return null;
   }
-  console.log(isLoggedin, nextUrl.pathname);
 
   if (!isLoggedin && !isPublicRoute) {
     let callbackUrl = nextUrl.pathname;
