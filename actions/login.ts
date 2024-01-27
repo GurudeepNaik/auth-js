@@ -95,8 +95,10 @@ export const login = async (
     await signIn("credentials", {
       email,
       password,
-      redirect: false,
+      redirect: true,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
+    return;
     if (callbackUrl) {
       redirect(callbackUrl);
     } else {
