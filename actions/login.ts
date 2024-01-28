@@ -92,19 +92,17 @@ export const login = async (
   }
 
   try {
-    const data = await signIn("credentials", {
+    await signIn("credentials", {
       email,
       password,
-      redirect: true,
-      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      redirect: false,
     });
-    return { success: "Success redirecting...!" };
 
-    // if (callbackUrl) {
-    //   redirect(callbackUrl);
-    // } else {
-    //   redirect(DEFAULT_LOGIN_REDIRECT);
-    // }
+    if (callbackUrl) {
+      redirect(callbackUrl);
+    } else {
+      redirect(DEFAULT_LOGIN_REDIRECT);
+    }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
